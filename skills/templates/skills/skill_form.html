@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>{% if skill %}Modifier{% else %}Ajouter{% endif %} une compétence</title>
+</head>
+<body>
+    <h1>{% if skill %}Modifier{% else %}Ajouter{% endif %} une compétence</h1>
+
+    <form method="POST">
+        {% csrf_token %}
+
+        <label>Nom :</label>
+        <input type="text" name="name"
+               value="{{ skill.name|default:'' }}" required>
+
+        <br><br>
+
+        <label>Catégorie :</label>
+        <select name="category" required>
+            <option value="">Choisir une catégorie</option>
+            {% for value, label in categories %}
+                <option value="{{ value }}"
+                    {% if skill.category == value %}selected{% endif %}>
+                    {{ label }}
+                </option>
+            {% endfor %}
+        </select>
+
+        <br><br>
+
+        <label>Niveau (%) :</label>
+        <input type="number" name="level" min="0" max="100"
+               value="{{ skill.level|default:50 }}" required>
+
+        <br><br>
+
+        <label>Icône :</label>
+        <input type="text" name="icon"
+               value="{{ skill.icon|default:'' }}">
+
+        <br><br>
+
+        <button type="submit">Enregistrer</button>
+    </form>
+
+    <a href="{% url 'skill_list' %}">Retour</a>
+</body>
+</html>

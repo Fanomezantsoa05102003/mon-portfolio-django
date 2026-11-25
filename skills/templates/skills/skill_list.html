@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Mes compétences</title>
+</head>
+<body>
+    <h1>Mes compétences</h1>
+
+    <a href="{% url 'skill_create' %}">Ajouter une compétence</a>
+
+    <ul>
+        {% for skill in skills %}
+            <li>
+                <strong>{{ skill.name }}</strong>
+                — {{ skill.get_category_display }}
+                — {{ skill.level }} %
+
+                <a href="{% url 'skill_update' skill.pk %}">Modifier</a>
+                <a href="{% url 'skill_delete' skill.pk %}">Supprimer</a>
+            </li>
+        {% empty %}
+            <li>Aucune compétence enregistrée.</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
